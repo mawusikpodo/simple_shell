@@ -52,7 +52,7 @@ char *read_line(void)
 
 	if (line == NULL)
 	{
-		fprintf(stderr, "allocation error in read_stream");
+		perror("allocation error in read_stream");
 		exit(EXIT_FAILURE);
 	}
 	while (1)
@@ -79,7 +79,7 @@ char *read_line(void)
 			line = realloc(line, bufsize);
 			if (line == NULL)
 			{
-				fprintf(stderr, "reallocation error in read_stream");
+				perror("reallocation error in read_stream");
 				exit(EXIT_FAILURE);
 			}
 		}

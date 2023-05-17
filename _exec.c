@@ -16,7 +16,7 @@ int execute_command(char *command, char **argv, char **envp, char *path)
 
 	full_path = search_path(command, full_path, path);
 	if (full_path != NULL)
-		exec(full_path, child_pid, status, argv, envp);
+		_exec(full_path, child_pid, status, argv, envp);
 	else
 	{
 		if (access(command, X_OK) == 0)
@@ -42,14 +42,14 @@ int execute_command(char *command, char **argv, char **envp, char *path)
 }
 
 /**
- * exec - execute command
+ * _exec - execute command
  * @full_path: command fullpath
  * @child_pid: process id
  * @status: check status
  * @argv: argument vector
  * @envp: environment variable
  */
-void exec(char *full_path, pid_t child_pid,
+void _exec(char *full_path, pid_t child_pid,
 		int status, char **argv, char **envp)
 {
 	child_pid = fork();

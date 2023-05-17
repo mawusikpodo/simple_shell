@@ -12,6 +12,11 @@
 #define TOK_DELIM " \t\r\n\a\""
 extern char **environ;
 
+typedef struct {
+	char *name;
+	int (*func)(char **);
+} Command;
+
 /* prototypes */
 void print_prompt(void);
 void prompt(char **envp);
@@ -27,7 +32,7 @@ char **allocate_tokens(int size);
 char **reallocate_tokens(char **tokens, int *size);
 /*char *get_executable_path(char *command, char **envp);*/
 int execute_command(char *command, char **argv, char **envp, char *path);
-void exec(char *full_path, pid_t child_pid,
+void _exec(char *full_path, pid_t child_pid,
 		int status, char **argv, char **envp);
 /*int new_process(char **args, char **envp);*/
 

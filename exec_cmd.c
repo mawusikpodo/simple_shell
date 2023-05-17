@@ -11,36 +11,36 @@ int exec_cmd(char **args, char **envp)
 {
 	unsigned int i, j;
 	char *path = NULL;
-
-	char *builtin_func_list[] = {
-		"env",
-		"exit"
+	size_t num_builtins;	
+	Command builtin_commands[] = {
+		{"env", &own_env},
+		{"exit", &own_exit}
 	};
-	int (*builtin_func[])(char **) = {
-		&own_env,
-		&own_exit
-	};
-	/* Find the PATH environment variable */
-	for (i = 0; envp[i] != NULL; i++)
+	static char *cached_path = NULL;
+	if (cached_path == NULL)
 	{
-		if (strncmp(envp[i], "PATH=", 5) == 0)
+		for (i = 0; envp[i] != NULL; i++)
 		{
-			path = envp[i] + 5;
-			break;
+			if (strncmp(envp[i], "PATH=", 5) == 0)
+			{
+				cached_path = envp[i] + 5;
+				break;
+			}
 		}
-	}
-
+	}	
+	num_builtins = sizeof(builtin_commands) / sizeof(builtin_commands[0]);
 	j = 0;
 	if (args[0] == NULL)
 	{
 		return (-1);
 	}
-	for (; j < sizeof(builtin_func_list) / sizeof(char *); j++)
+	for (; j < num_builtins; j++)
 	{
-		if (strcmp(args[0], builtin_func_list[j]) == 0)
+		if (strcmp(args[0], builtin_commands[j].name) == 0)
 		{
-			return ((*builtin_func[j])(args));
+			return ((*builtin_commands[j].func)(args));
 		}
 	}
+	path = cached_path;
 	return (execute_command(args[0], args, envp, path));
 }
