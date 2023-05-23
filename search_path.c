@@ -16,7 +16,7 @@ char *search_path(char *command, char *fullpath, char *path)
 	path_cpy = malloc(sizeof(char) * original_path_len + 1);
 	if (!path_cpy)
 	{
-		errors(3);
+		perror("malloc failed");
 		return (NULL);
 	}
 	_strcpy(path_cpy, path);
@@ -30,7 +30,7 @@ char *search_path(char *command, char *fullpath, char *path)
 		fullpath = malloc(sizeof(char) * (path_len + command_len) + 2);
 		if (!fullpath)
 		{
-			errors(3);
+			perror("malloc failed");
 			return (NULL);
 		}
 		_strcpy(fullpath, token);

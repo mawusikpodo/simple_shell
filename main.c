@@ -7,9 +7,9 @@
  * Return: Always 0.
  */
 
-int main(int argc, char **argv __attribute__((unused)), char **envp)
+int main(int argc, char **argv __attribute__((unused)))
 {
 	if (argc == 1)
-		prompt(envp);
+		prompt(environ);
 	return (0);
 }

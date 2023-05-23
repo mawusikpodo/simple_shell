@@ -11,12 +11,13 @@ int exec_cmd(char **args, char **envp)
 {
 	unsigned int i, j;
 	char *path = NULL;
-	size_t num_builtins;	
-	Command builtin_commands[] = {
+	size_t num_builtins;
+	command_t builtin_commands[] = {
 		{"env", &own_env},
 		{"exit", &own_exit}
 	};
-	static char *cached_path = NULL;
+	static char *cached_path;
+
 	if (cached_path == NULL)
 	{
 		for (i = 0; envp[i] != NULL; i++)
@@ -27,7 +28,7 @@ int exec_cmd(char **args, char **envp)
 				break;
 			}
 		}
-	}	
+	}
 	num_builtins = sizeof(builtin_commands) / sizeof(builtin_commands[0]);
 	j = 0;
 	if (args[0] == NULL)
