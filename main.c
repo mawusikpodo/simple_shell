@@ -3,7 +3,6 @@
  * main - Entry point
  * @argc: argument count
  * @argv: argument vector
- * @envp: evironment variable
  * Return: Always 0.
  */
 
