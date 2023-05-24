@@ -26,7 +26,7 @@ int execute_command(char *command, char **argv, char **envp, char *path)
 			{
 				if (execve(command, argv, envp) == -1)
 				{
-					print_error(argv[0], ": Failed to execute command\n");
+					perror("Failed to execute command");
 				}
 				exit(EXIT_FAILURE);
 			}
@@ -35,7 +35,7 @@ int execute_command(char *command, char **argv, char **envp, char *path)
 		}
 		else
 		{
-			print_error(argv[0], ": Command not found\n");
+			perror("Command not found");
 		}
 	}
 	return (1);
@@ -56,7 +56,7 @@ void _exec(char *full_path, pid_t child_pid,
 	if (child_pid == 0)
 	{
 		if (execve(full_path, argv, envp) == -1)
-			print_error(argv[0], ": Failed to execute command\n");
+			perror("Failed to execute command");
 		exit(EXIT_FAILURE);
 	}
 	else
