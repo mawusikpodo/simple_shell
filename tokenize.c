@@ -16,7 +16,6 @@ char **allocate_tokens(int size)
 	if (!tokens)
 	{
 		perror("allocation error in allocate_tokens()");
-		free(tokens);
 		exit(EXIT_FAILURE);
 	}
 	return (tokens);
@@ -37,7 +36,6 @@ char **reallocate_tokens(char **tokens, int *size)
 	if (!tokens)
 	{
 		perror("reallocation error in reallocate_tokens(): tokens");
-		free(tokens);
 		exit(EXIT_FAILURE);
 	}
 	return (tokens);
