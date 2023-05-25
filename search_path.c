@@ -20,7 +20,6 @@ char *search_path(char *command, char *fullpath, char *path)
 		return (NULL);
 	}
 	_strcpy(path_cpy, path);
-	/* copy PATH directory + command name and check if it exists */
 	token = strtok(path_cpy, ":");
 	if (token == NULL)
 		token = strtok(NULL, ":");
@@ -39,7 +38,6 @@ char *search_path(char *command, char *fullpath, char *path)
 		fullpath[path_len + command_len + 1] = '\0';
 		if (access(fullpath, X_OK) != 0)
 		{
-			free(fullpath);
 			fullpath = NULL;
 			token = strtok(NULL, ":");
 		}

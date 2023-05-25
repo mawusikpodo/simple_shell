@@ -45,14 +45,13 @@ char *read_command(void)
  */
 char *read_line(void)
 {
-	int bufsize = 1024;
-	int i = 0;
+	int bufsize = 1024, i = 0, character;
 	char *line = malloc(sizeof(char) * bufsize);
-	int character;
 
 	if (line == NULL)
 	{
 		perror("allocation error in read_stream");
+		free(line);
 		exit(EXIT_FAILURE);
 	}
 	while (1)
@@ -60,13 +59,13 @@ char *read_line(void)
 		character = getchar(); /* read first char from stream */
 		if (character == EOF)
 		{
-			free(line);
-			exit(EXIT_SUCCESS);
+			line[i] = '\0';
+			break;
 		}
 		else if (character == '\n')
 		{
 			line[i] = '\0';
-			return (line);
+			break;
 		}
 		else
 		{
@@ -75,7 +74,7 @@ char *read_line(void)
 		i++;
 		if (i >= bufsize)
 		{
-			bufsize += bufsize;
+			bufsize += 1024;
 			line = realloc(line, bufsize);
 			if (line == NULL)
 			{
@@ -84,6 +83,7 @@ char *read_line(void)
 			}
 		}
 	}
+	return (line);
 }
 
 /**

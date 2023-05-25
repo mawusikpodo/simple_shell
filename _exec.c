@@ -56,7 +56,10 @@ void _exec(char *full_path, pid_t child_pid,
 	if (child_pid == 0)
 	{
 		if (execve(full_path, argv, envp) == -1)
+		{
 			perror("Failed to execute command");
+			free(full_path);
+		}
 		exit(EXIT_FAILURE);
 	}
 	else
