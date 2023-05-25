@@ -30,6 +30,7 @@ char *search_path(char *command, char *fullpath, char *path)
 		if (!fullpath)
 		{
 			perror("malloc failed");
+			free(path_cpy);
 			return (NULL);
 		}
 		_strcpy(fullpath, token);
@@ -38,6 +39,7 @@ char *search_path(char *command, char *fullpath, char *path)
 		fullpath[path_len + command_len + 1] = '\0';
 		if (access(fullpath, X_OK) != 0)
 		{
+			free(fullpath);
 			fullpath = NULL;
 			token = strtok(NULL, ":");
 		}

@@ -24,15 +24,14 @@ char *read_command(void)
 	{
 		if (feof(stdin))
 		{
-			free(line);
 			exit(EXIT_SUCCESS);
 		}
 		else
 		{
-			free(line);
 			perror("error reading line from stdin");
 			exit(EXIT_FAILURE);
 		}
+		free(line);
 	}
 	return (line);
 }
@@ -82,6 +81,7 @@ char *read_line(void)
 				exit(EXIT_FAILURE);
 			}
 		}
+		free(line);
 	}
 	return (line);
 }
@@ -105,7 +105,7 @@ void prompt(char **envp)
 
 		args = tokenize(line);
 		exec_cmd(args, envp);
+		free(line);
+		free(args);
 	}
-	free(line);
-	free(args);
 }

@@ -16,7 +16,9 @@ int execute_command(char *command, char **argv, char **envp, char *path)
 
 	full_path = search_path(command, full_path, path);
 	if (full_path != NULL)
+	{
 		_exec(full_path, child_pid, status, argv, envp);
+	}
 	else
 	{
 		if (access(command, X_OK) == 0)
@@ -38,6 +40,7 @@ int execute_command(char *command, char **argv, char **envp, char *path)
 			perror("Command not found");
 		}
 	}
+	free(full_path);
 	return (1);
 }
 
@@ -58,11 +61,9 @@ void _exec(char *full_path, pid_t child_pid,
 		if (execve(full_path, argv, envp) == -1)
 		{
 			perror("Failed to execute command");
-			free(full_path);
 		}
 		exit(EXIT_FAILURE);
 	}
 	else
 		wait(&status);
-	free(full_path);
 }
