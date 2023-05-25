@@ -81,7 +81,6 @@ char *read_line(void)
 				exit(EXIT_FAILURE);
 			}
 		}
-		free(line);
 	}
 	return (line);
 }
